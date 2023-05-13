@@ -1,1 +1,1 @@
-Tutaj umieszczać zajęcia laboratoryjne
+

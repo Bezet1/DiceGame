@@ -1,0 +1,4 @@
+﻿  Funkcje.cpp
+A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\GraWKosci\Funkcje.cpp(216,20): warning C4018: '<': signed/unsigned mismatch
+A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\GraWKosci\Funkcje.cpp(51): warning C4715: 'showMenu': not all control paths return a value
+  GraWKosci.vcxproj -> A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\Debug\GraWKosci.exe

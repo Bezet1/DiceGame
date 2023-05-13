@@ -1,0 +1,6 @@
+﻿  Funkcje.cpp
+A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\GraWKosci\Funkcje.cpp(256,64): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\GraWKosci\Funkcje.cpp(272,82): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Test.cpp
+  Generating Code...
+  GraWKosci.vcxproj -> A:\repozytoria git\Studia sem 2\Projekt\GraWKosci\x64\Debug\GraWKosci.exe

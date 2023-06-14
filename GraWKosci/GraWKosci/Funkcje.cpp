@@ -97,7 +97,7 @@ int Player::rollDice(int numberOfDice) {
 			std::cout << std::string(i + 1, '#') << std::string(10 - i - 1, ' ') << " " << rolls[j] << " " << std::flush;
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(3));//300
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	}
 
 	std::cout << std::endl;
@@ -126,6 +126,21 @@ Player::Player(std::string name, int id) {
 	Player::setDateOfJoin();
 }
 
+Round::Round(int number) {
+	this->Number = number;
+}
+
+void Round::RoundLayout() {
+	int titleColor = 2;
+
+	system("cls");
+
+	writeCharacter(25, " ", 7);
+	SetConsoleTextAttribute(h, titleColor);
+	std::cout << "Round " << this->Number << std::endl;
+	SetConsoleTextAttribute(h, 7);
+	
+}
 
 bool showMenu() {
 	menuLayout();
@@ -134,10 +149,6 @@ bool showMenu() {
 	while (std::getline(std::cin, input)) {
 		if (input == "o" || input == "O") {
 			showOptions();
-			break;
-		}
-		else if (input == "r" || input == "R") {
-			showRanking();
 			break;
 		}
 		else if (input == "s" || input == "S") {
@@ -169,34 +180,21 @@ void showOptions() {
 	}
 }
 
-void showRanking() {
-	rankingLayout();
-
-	std::string input;
-	while (std::getline(std::cin, input)) {
-		if (input == "b" || input == "B") {
-			showMenu();
-			break;
-		}
-		else {
-			alert("Invalid input", 4);
-		}
-	}
-}
-
 void startGame() {
-	//jesli sie uda to players do wywalenia TODO
 	std::vector<Player*> player_ptrs;
+	std::vector<Round> rounds;
 
 	int numberOfPlayers, numberOfDice, numberOfRounds;
 
 	setGame(numberOfPlayers, numberOfDice, numberOfRounds);
 
+	getRoundsInstances(rounds, numberOfRounds);
+
 	setNamesOfPlayers(numberOfPlayers, player_ptrs);
 	
 	loading();
 
-	startRound(numberOfRounds, numberOfDice, player_ptrs);
+	startRound(numberOfRounds, numberOfDice, player_ptrs, rounds);
 
 	sortPlayersByPoints(player_ptrs);
 
@@ -205,10 +203,11 @@ void startGame() {
 	showScoreboard(player_ptrs);
 }
 
-void startRound(int numberOfRounds, int numberOfDice, std::vector<Player*>& players) {
+void startRound(int numberOfRounds, int numberOfDice, std::vector<Player*>& players, std::vector<Round>& rounds) {
 
-	for (int i = 1; i < numberOfRounds + 1; i++) {
-		roundLayout(i);
+	for (Round &singleRound: rounds) {
+
+		singleRound.RoundLayout();
 
 		for (Player* singlePlayer : players) {
 			int sum = singlePlayer->rollDice(numberOfDice);
@@ -227,6 +226,13 @@ void startRound(int numberOfRounds, int numberOfDice, std::vector<Player*>& play
 		}
 	}
 
+}
+
+void getRoundsInstances(std::vector<Round>& rounds, int numberOfRounds) {
+	for (int i = 0; i < numberOfRounds; i++) {
+		Round newRound(i + 1);
+		rounds.push_back(newRound);
+	}
 }
 
 void applySort(std::vector<Player*>& sortedPlayers, std::vector<Player*>& drawPlayers, int index) {
@@ -464,10 +470,10 @@ void loading() {
 	writeCharacter(25, " ", 7);
 	std::cout << "Loading";
 
-	for (int i = 0; i < 1; ++i) {
+	for (int i = 0; i < 3; ++i) {
 		std::cout << ".";
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(600));
 	}
 
 	system("cls");
@@ -535,8 +541,6 @@ void menuLayout() {
 	writeRow(3, mainColor);
 	writeName("Start - s", 30, namesColor, mainColor);
 	writeRow(1, mainColor);
-	writeName("Ranking - r", 29, namesColor, mainColor);
-	writeRow(1, mainColor);
 	writeName("Options - o", 29, namesColor, mainColor);
 	writeRow(2, mainColor);
 	writeName("Exit - e ", 30, exitColor, mainColor);
@@ -572,39 +576,6 @@ void optionsLayout() {
 	writeRow(1, mainColor);
 	writeCharacter(71, "#", mainColor);
 	std::cout << std::endl;
-}
-
-void rankingLayout() {
-	int mainColor = 8;
-	int titleColor = 2;
-	int namesColor = 6;
-	int exitColor = 7;
-
-	system("cls");
-
-	SetConsoleTextAttribute(h, mainColor);
-
-	writeCharacter(71, "#", mainColor);
-	std::cout << std::endl;
-	writeRow(1, mainColor);
-	writeName("RANKING", 31, titleColor, mainColor);
-	writeRow(10, mainColor);
-	writeName(" Back - b", 30, exitColor, mainColor);
-	writeRow(1, mainColor);
-
-	writeCharacter(71, "#", mainColor);
-	std::cout << std::endl;
-}
-
-void roundLayout(int numberOfRound) {
-	int titleColor = 2;
-
-	system("cls");
-
-	writeCharacter(25, " ", 7);
-	SetConsoleTextAttribute(h, titleColor);
-	std::cout << "Round " << numberOfRound << std::endl;
-	SetConsoleTextAttribute(h, 7);
 }
 
 void checkDrawLayout() {

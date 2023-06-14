@@ -33,14 +33,18 @@ public:
 	std::string getDateOfJoin();
 };
 
+class Round {
+	int Number;
+public:
+	Round(int number);
+	void RoundLayout();
+};
+
 void menuLayout();
 void optionsLayout();
-void rankingLayout();
-void roundLayout(int numberOfRound);
 void checkDrawLayout();
 void scoreboardLayout();
 bool showMenu();
-void showRanking();
 void showOptions();
 void showScoreboard(std::vector<Player*>& players);
 void startGame();
@@ -55,7 +59,8 @@ void setNamesOfPlayers(int& numbersOfPlayers, std::vector<Player*>& vectorOfPlay
 std::string correctName(std::string name);
 void getInputUntilDone(int& Number, std::string text, std::string alertText, int minimal);
 void loading();
-void startRound(int numbersOfRounds, int numbersOfDice, std::vector<Player*>& players);
+void startRound(int numbersOfRounds, int numbersOfDice, std::vector<Player*>& players, std::vector<Round>& rounds);
+void getRoundsInstances(std::vector<Round>& rounds, int numberOfRounds);
 bool comparePlayersByPoints(Player* p1, Player* p2);
 void sortPlayersByPoints(std::vector<Player*>& players);
 void checkDraw(std::vector<Player*>& sortedPlayers, int numberOfDice);
